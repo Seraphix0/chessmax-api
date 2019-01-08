@@ -46,7 +46,10 @@
         </property>
 
         <mapping class="com.mellykusjes.chessmaxapi.models.User" />
-        <!--TODO: Fix 'Game' model mapping-->
         <mapping class="com.mellykusjes.chessmaxapi.models.Game" />
+        <mapping class="com.mellykusjes.chessmaxapi.models.Move" />
+        <mapping class="com.mellykusjes.chessmaxapi.models.Position" />
+        <mapping class="com.mellykusjes.chessmaxapi.models.Color" />
+        <mapping class="com.mellykusjes.chessmaxapi.models.Piece" />
     </session-factory>
 </hibernate-configuration>

@@ -1,7 +1,16 @@
 package com.mellykusjes.chessmaxapi.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "piece")
 public abstract class Piece {
+
+    @Id
+    @GeneratedValue
     private int id;
+
+    @Enumerated(EnumType.ORDINAL)
     private Color color;
 
     public int getId() {

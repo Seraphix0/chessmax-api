@@ -6,9 +6,10 @@ import com.mellykusjes.chessmaxapi.interfaces.PieceFactory;
 import com.mellykusjes.chessmaxapi.models.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -16,22 +17,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game createGame(User playerWhite, User playerBlack) {
-        return new Game(createSession(playerWhite, playerBlack), createBoard());
+        return new Game(playerWhite, playerBlack, createInitialBoardstate());
     }
 
     @Override
-    public Session createSession(User playerWhite, User playerBlack) {
-        return new Session(playerWhite, playerBlack);
-    }
-
-    @Override
-    public Board createBoard() {
-        return new Board(createInitialBoardstate());
-    }
-
-    @Override
-    public HashMap<Position, Piece> createInitialBoardstate() {
-        HashMap<Position, Piece> boardState = new HashMap<>();
+    public Map<Position, Piece> createInitialBoardstate() {
+        Map<Position, Piece> boardState = new HashMap<>();
 
         boardState.put(new Position(0,0), pieceFactory.createPiece(Color.white, "Castle"));
         boardState.put(new Position(1,0), pieceFactory.createPiece(Color.white, "Knight"));
@@ -66,9 +57,8 @@ public class GameServiceImpl implements GameService {
     public Game executeMove(Game game, Move move) {
         // Create temporary working instances
         Game tempGame = game;
-        Board tempBoard = game.getBoard();
-        HashMap<Position, Piece> boardState = tempBoard.getBoardstate();
-        List<Piece> removedPieces = tempBoard.getRemovedPieces();
+        Map<Position, Piece> boardState = tempGame.getBoardstate();
+        Set<Piece> removedPieces = tempGame.getRemovedPieces();
 
         Piece initialPosition = boardState.get(move.getInitialPosition());
 
@@ -84,12 +74,11 @@ public class GameServiceImpl implements GameService {
         }
 
         // Return modified instance of 'game'
-        tempBoard.setBoardstate(boardState);
-        tempBoard.setRemovedPieces(removedPieces);
+        tempGame.setBoardstate(boardState);
+        tempGame.setRemovedPieces(removedPieces);
 
-        tempBoard.history.add(move);
+        tempGame.history.add(move);
 
-        tempGame.setBoard(tempBoard);
         return tempGame;
     }
 }
