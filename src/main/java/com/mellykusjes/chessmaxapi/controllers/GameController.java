@@ -25,10 +25,8 @@ public class GameController {
     }
 
     @PostMapping(path = "game/{id}/move")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Game executeMove(@PathVariable int id, Move move) {
-        // TODO: Get game with 'gameId' from GameRepository
-        // TODO: Execute move and return modified Game instance
-        // return gameService.executeMove();
-        return null;
+        return gameService.executeMove(gameService.read(id), move);
     }
 }

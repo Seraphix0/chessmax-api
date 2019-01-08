@@ -40,7 +40,7 @@ public class GameServiceImpl implements GameService {
         boardState.put(new Position(6,0), pieceFactory.createPiece(Color.white, "Knight"));
         boardState.put(new Position(7,0), pieceFactory.createPiece(Color.white, "Castle"));
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             boardState.put(new Position(i, 1), pieceFactory.createPiece(Color.white, "Pawn"));
         }
 
@@ -53,7 +53,7 @@ public class GameServiceImpl implements GameService {
         boardState.put(new Position(6,7), pieceFactory.createPiece(Color.black, "Knight"));
         boardState.put(new Position(7,7), pieceFactory.createPiece(Color.black, "Castle"));
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             boardState.put(new Position(i, 6), pieceFactory.createPiece(Color.black, "Pawn"));
         }
 
@@ -62,31 +62,44 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game executeMove(Game game, Move move) {
+        // TODO: Implement move logic
+
         // Create temporary working instances
         Game tempGame = game;
         Map<Position, Piece> boardState = tempGame.getBoardstate();
         Set<Piece> removedPieces = tempGame.getRemovedPieces();
 
+        // Get piece currently occupying the initial position
         Piece initialPosition = boardState.get(move.getInitialPosition());
 
-        boardState.remove(move.getInitialPosition());
+        if (verifyMove(boardState, move)) {
+            // Check if a piece occupies the target position
+            if (boardState.containsKey(move.getTargetPosition())) {
+                removedPieces.add(boardState.get(move.getTargetPosition()));
+                boardState.replace(move.getTargetPosition(), initialPosition);
+            } else {
+                boardState.put(move.getTargetPosition(), initialPosition);
+            }
+            boardState.remove(move.getInitialPosition());
 
-        // Check if a piece occupies the target position
-        // TODO: Implement move logic
-        if (boardState.containsKey(move.getTargetPosition())) {
-            removedPieces.add(boardState.get(move.getTargetPosition()));
-            boardState.replace(move.getTargetPosition(), initialPosition);
+            // Return modified instance of 'game'
+            tempGame.setBoardstate(boardState);
+            tempGame.setRemovedPieces(removedPieces);
+
+            tempGame.history.add(move);
+
+            return tempGame;
         } else {
-            boardState.put(move.getTargetPosition(), initialPosition);
+            return game;
         }
+    }
 
-        // Return modified instance of 'game'
-        tempGame.setBoardstate(boardState);
-        tempGame.setRemovedPieces(removedPieces);
+    @Override
+    public boolean verifyMove(Map<Position, Piece> boardState, Move move) {
+        Piece piece = boardState.get(move.getInitialPosition());
 
-        tempGame.history.add(move);
-
-        return tempGame;
+        // If targetPosition is allowed, return true;
+        return piece.computeAllowedTargetPositions(boardState, move.getInitialPosition()).contains(move.getTargetPosition());
     }
 
     // CRUD operations

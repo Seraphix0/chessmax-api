@@ -14,6 +14,7 @@ public interface GameService {
     Game createGame(User playerWhite, User playerBlack);
     Map<Position, Piece> createInitialBoardstate();
     Game executeMove(Game game, Move move);
+    boolean verifyMove(Map<Position, Piece> boardState, Move move);
 
     // CRUD operations
     void create(Game game);
