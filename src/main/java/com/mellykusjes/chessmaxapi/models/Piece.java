@@ -38,6 +38,13 @@ public abstract class Piece {
     }
 
     public boolean verifyPositionOccupation(Map<Position, Piece> boardState, Position targetPosition, Piece piece) {
-        throw new IllegalArgumentException("Cannot verify attack move for base class 'Piece'.");
+        // Check if targetPosition contains a piece
+        if (boardState.containsKey(targetPosition)) {
+
+            // Check if piece at targetPosition is of opposite color
+            return boardState.get(targetPosition).getColor() != piece.getColor();
+        } else {
+            return true;
+        }
     }
 }

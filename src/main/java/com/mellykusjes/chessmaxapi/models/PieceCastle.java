@@ -77,18 +77,6 @@ public class PieceCastle extends Piece {
         }
     }
 
-    @Override
-    public boolean verifyPositionOccupation(Map<Position, Piece> boardState, Position targetPosition, Piece piece) {
-        // Check if targetPosition contains a piece
-        if (boardState.containsKey(targetPosition)) {
-
-            // Check if piece at targetPosition is of opposite color
-            return boardState.get(targetPosition).getColor() != piece.getColor();
-        } else {
-            return true;
-        }
-    }
-
     // TODO: Castle move logic
     public boolean isNotMoved() {
         return notMoved;
