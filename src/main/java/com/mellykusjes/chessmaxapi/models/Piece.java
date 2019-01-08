@@ -28,6 +28,10 @@ public abstract class Piece {
         this.id = id;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public abstract void setType();
 
     public List<Position> computeAllowedTargetPositions(Map<Position, Piece> boardState, Position position) {
