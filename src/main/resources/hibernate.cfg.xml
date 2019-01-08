@@ -13,10 +13,12 @@
         </property>
 
         <property name="hibernate.connection.username">
-            root
+            chessmax
         </property>
 
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.password">
+            warfare0
+        </property>
 
         <property name="hibernate.connection.url">
             jdbc:mysql://localhost:3306/chessmax
@@ -44,6 +46,6 @@
 
         <mapping class="com.mellykusjes.chessmaxapi.models.User" />
         <!--TODO: Fix 'Game' model mapping-->
-        <!--<mapping class="com.mellykusjes.chessmaxapi.models.Game" />-->
+        <mapping class="com.mellykusjes.chessmaxapi.models.Game" />
     </session-factory>
 </hibernate-configuration>
