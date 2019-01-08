@@ -13,11 +13,12 @@
         </property>
 
         <property name="hibernate.connection.username">
-            chessmax
+            <!--chessmax-->
+            root
         </property>
 
         <property name="hibernate.connection.password">
-            warfare0
+            <!--warfare0-->
         </property>
 
         <property name="hibernate.connection.url">

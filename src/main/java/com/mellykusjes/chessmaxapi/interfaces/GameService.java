@@ -7,7 +7,8 @@ import java.util.HashMap;
 public interface GameService {
 
     Game createGame(User playerWhite, User playerBlack);
+    Session createSession(User playerWhite, User playerBlack);
     Board createBoard();
     HashMap<Position, Piece> createInitialBoardstate();
-    Board ExecuteMove(Board board, Move move);
+    Game executeMove(Game game, Move move);
 }

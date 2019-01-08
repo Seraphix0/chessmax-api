@@ -16,7 +16,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game createGame(User playerWhite, User playerBlack) {
-        return new Game(playerWhite, playerBlack, createBoard());
+        return new Game(createSession(playerWhite, playerBlack), createBoard());
+    }
+
+    @Override
+    public Session createSession(User playerWhite, User playerBlack) {
+        return new Session(playerWhite, playerBlack);
     }
 
     @Override
@@ -58,8 +63,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Board ExecuteMove(Board board, Move move) {
-        Board tempBoard = board;
+    public Game executeMove(Game game, Move move) {
+        // Create temporary working instances
+        Game tempGame = game;
+        Board tempBoard = game.getBoard();
         HashMap<Position, Piece> boardState = tempBoard.getBoardstate();
         List<Piece> removedPieces = tempBoard.getRemovedPieces();
 
@@ -67,6 +74,8 @@ public class GameServiceImpl implements GameService {
 
         boardState.remove(move.getInitialPosition());
 
+        // Check if a piece occupies the target position
+        // TODO: Implement move logic
         if (boardState.containsKey(move.getTargetPosition())) {
             removedPieces.add(boardState.get(move.getTargetPosition()));
             boardState.replace(move.getTargetPosition(), initialPosition);
@@ -74,11 +83,13 @@ public class GameServiceImpl implements GameService {
             boardState.put(move.getTargetPosition(), initialPosition);
         }
 
+        // Return modified instance of 'game'
         tempBoard.setBoardstate(boardState);
         tempBoard.setRemovedPieces(removedPieces);
 
         tempBoard.history.add(move);
 
-        return tempBoard;
+        tempGame.setBoard(tempBoard);
+        return tempGame;
     }
 }
