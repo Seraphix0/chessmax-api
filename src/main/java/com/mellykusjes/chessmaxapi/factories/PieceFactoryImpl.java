@@ -33,6 +33,7 @@ public class PieceFactoryImpl implements PieceFactory {
                 throw new IllegalArgumentException("No such piece.");
         }
 
+        piece.setColor(color);
         piece.setType();
         return piece;
     }
