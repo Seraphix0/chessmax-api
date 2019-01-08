@@ -27,4 +27,9 @@ public class User {
 
     @Column(name = "games_black")
     private int gamesblack;
+
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

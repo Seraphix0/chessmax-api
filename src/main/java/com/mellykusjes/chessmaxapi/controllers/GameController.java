@@ -24,8 +24,8 @@ public class GameController {
         return gameService.createGame(playerWhite, playerBlack);
     }
 
-    @PostMapping(path = "game/{gameId}/move")
-    public Game executeMove(@PathVariable int gameId, Move move) {
+    @PostMapping(path = "game/{id}/move")
+    public Game executeMove(@PathVariable int id, Move move) {
         // TODO: Get game with 'gameId' from GameRepository
         // TODO: Execute move and return modified Game instance
         // return gameService.executeMove();
