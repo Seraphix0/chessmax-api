@@ -17,10 +17,15 @@ public class PieceKing extends Piece {
     public List<Position> computeAllowedTargetPositions(Map<Position, Piece> boardState, Position initialPosition) {
         List<Position> allowedTargetPositions = new ArrayList<>();
 
+        // TODO: King single step range logic
         allowedTargetPositions.addAll(computeCrossMove(boardState, initialPosition));
         allowedTargetPositions.addAll(computeDiagonalMove(boardState, initialPosition));
 
         return allowedTargetPositions;
     }
 
+    // TODO: Castle move logic
+    public boolean isNotMoved() {
+        return notMoved;
+    }
 }

@@ -38,7 +38,7 @@ public abstract class Piece {
         throw new IllegalArgumentException("Cannot compute allowed target positions for base class 'Piece'.");
     }
 
-    public List<Position> computeCrossMove(Map<Position, Piece> boardState, Position initialPosition) {
+    List<Position> computeCrossMove(Map<Position, Piece> boardState, Position initialPosition) {
         List<Position> allowedTargetPositions = new ArrayList<>();
         Piece piece = boardState.get(initialPosition);
 
@@ -47,8 +47,12 @@ public abstract class Piece {
             Position targetPosition = new Position(x, initialPosition.getY());
 
             // Check if targetPosition contains a piece
-            if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                allowedTargetPositions.add(targetPosition);
+            if (boardState.containsKey(targetPosition)) {
+
+                // Check if piece at targetPosition is of opposite color
+                if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                    allowedTargetPositions.add(targetPosition);
+                }
                 break;
             } else {
                 allowedTargetPositions.add(targetPosition);
@@ -56,12 +60,16 @@ public abstract class Piece {
         }
 
         // Check left of initialPosition
-        for (int x = initialPosition.getX() - 1; x > -1; x--) {
+        for (int x = initialPosition.getX() - 1; x > 0; x--) {
             Position targetPosition = new Position(x, initialPosition.getY());
 
             // Check if targetPosition contains a piece
-            if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                allowedTargetPositions.add(targetPosition);
+            if (boardState.containsKey(targetPosition)) {
+
+                // Check if piece at targetPosition is of opposite color
+                if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                    allowedTargetPositions.add(targetPosition);
+                }
                 break;
             } else {
                 allowedTargetPositions.add(targetPosition);
@@ -73,8 +81,12 @@ public abstract class Piece {
             Position targetPosition = new Position(initialPosition.getX(), y);
 
             // Check if targetPosition contains a piece
-            if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                allowedTargetPositions.add(targetPosition);
+            if (boardState.containsKey(targetPosition)) {
+
+                // Check if piece at targetPosition is of opposite color
+                if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                    allowedTargetPositions.add(targetPosition);
+                }
                 break;
             } else {
                 allowedTargetPositions.add(targetPosition);
@@ -82,12 +94,16 @@ public abstract class Piece {
         }
 
         // Check under initialPosition
-        for (int y = initialPosition.getY() - 1; y > -1; y--) {
+        for (int y = initialPosition.getY() - 1; y > 0; y--) {
             Position targetPosition = new Position(initialPosition.getX(), y);
 
             // Check if targetPosition contains a piece
-            if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                allowedTargetPositions.add(targetPosition);
+            if (boardState.containsKey(targetPosition)) {
+
+                // Check if piece at targetPosition is of opposite color
+                if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                    allowedTargetPositions.add(targetPosition);
+                }
                 break;
             } else {
                 allowedTargetPositions.add(targetPosition);
@@ -97,7 +113,7 @@ public abstract class Piece {
         return allowedTargetPositions;
     }
 
-    public List<Position> computeDiagonalMove(Map<Position, Piece> boardState, Position initialPosition) {
+    List<Position> computeDiagonalMove(Map<Position, Piece> boardState, Position initialPosition) {
         List<Position> allowedTargetPositions = new ArrayList<>();
         Piece piece = boardState.get(initialPosition);
 
@@ -107,12 +123,16 @@ public abstract class Piece {
         for (int x = initialPosition.getX() + 1; x < 7; x++) {
 
             // Check if Y-axis does not exceed board range
-            if (initialPosition.getY() + count < 7) {
+            if (initialPosition.getY() + count < 8) {
                 Position targetPosition = new Position(x, initialPosition.getY() + count);
 
                 // Check if targetPosition contains a piece
-                if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                    allowedTargetPositions.add(targetPosition);
+                if (boardState.containsKey(targetPosition)) {
+
+                    // Check if piece at targetPosition is of opposite color
+                    if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                        allowedTargetPositions.add(targetPosition);
+                    }
                     break;
                 } else {
                     allowedTargetPositions.add(targetPosition);
@@ -128,12 +148,16 @@ public abstract class Piece {
         for (int x = initialPosition.getX() - 1; x > -1; x--) {
 
             // Check if Y-axis does not exceed board range
-            if (initialPosition.getY() + count < 7) {
+            if (initialPosition.getY() + count < 8) {
                 Position targetPosition = new Position(x, initialPosition.getY() + count);
 
                 // Check if targetPosition contains a piece
-                if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                    allowedTargetPositions.add(targetPosition);
+                if (boardState.containsKey(targetPosition)) {
+
+                    // Check if piece at targetPosition is of opposite color
+                    if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                        allowedTargetPositions.add(targetPosition);
+                    }
                     break;
                 } else {
                     allowedTargetPositions.add(targetPosition);
@@ -153,8 +177,12 @@ public abstract class Piece {
                 Position targetPosition = new Position(x, initialPosition.getY() - count);
 
                 // Check if targetPosition contains a piece
-                if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                    allowedTargetPositions.add(targetPosition);
+                if (boardState.containsKey(targetPosition)) {
+
+                    // Check if piece at targetPosition is of opposite color
+                    if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                        allowedTargetPositions.add(targetPosition);
+                    }
                     break;
                 } else {
                     allowedTargetPositions.add(targetPosition);
@@ -174,8 +202,12 @@ public abstract class Piece {
                 Position targetPosition = new Position(x, initialPosition.getY() - count);
 
                 // Check if targetPosition contains a piece
-                if (verifyPositionOccupation(boardState, targetPosition, piece)) {
-                    allowedTargetPositions.add(targetPosition);
+                if (boardState.containsKey(targetPosition)) {
+
+                    // Check if piece at targetPosition is of opposite color
+                    if (boardState.get(targetPosition).getColor() != piece.getColor()) {
+                        allowedTargetPositions.add(targetPosition);
+                    }
                     break;
                 } else {
                     allowedTargetPositions.add(targetPosition);
@@ -186,16 +218,5 @@ public abstract class Piece {
         }
 
         return allowedTargetPositions;
-    }
-
-    public boolean verifyPositionOccupation(Map<Position, Piece> boardState, Position targetPosition, Piece piece) {
-        // Check if targetPosition contains a piece
-        if (boardState.containsKey(targetPosition)) {
-
-            // Check if piece at targetPosition is of opposite color
-            return boardState.get(targetPosition).getColor() != piece.getColor();
-        } else {
-            return true;
-        }
     }
 }

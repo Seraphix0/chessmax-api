@@ -15,11 +15,7 @@ public class PieceCastle extends Piece {
 
     @Override
     public List<Position> computeAllowedTargetPositions(Map<Position, Piece> boardState, Position initialPosition) {
-        List<Position> allowedTargetPositions = new ArrayList<>();
-
-        allowedTargetPositions.addAll(computeCrossMove(boardState, initialPosition));
-
-        return allowedTargetPositions;
+        return computeCrossMove(boardState, initialPosition);
     }
 
     // TODO: Castle move logic
