@@ -1,6 +1,7 @@
 package com.mellykusjes.chessmaxapi.services;
 
 import com.mellykusjes.chessmaxapi.factories.PieceFactoryImpl;
+import com.mellykusjes.chessmaxapi.interfaces.GameRepository;
 import com.mellykusjes.chessmaxapi.interfaces.GameService;
 import com.mellykusjes.chessmaxapi.interfaces.PieceFactory;
 import com.mellykusjes.chessmaxapi.models.*;
@@ -14,6 +15,12 @@ import java.util.Set;
 @Service
 public class GameServiceImpl implements GameService {
     private PieceFactory pieceFactory = new PieceFactoryImpl();
+
+    private GameRepository gameRepository;
+
+    public GameServiceImpl (GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
 
     @Override
     public Game createGame(User playerWhite, User playerBlack) {
@@ -80,5 +87,31 @@ public class GameServiceImpl implements GameService {
         tempGame.history.add(move);
 
         return tempGame;
+    }
+
+    // CRUD operations
+    @Override
+    public void create(Game game) {
+        gameRepository.create(game);
+    }
+
+    @Override
+    public Game read(int id) {
+        return gameRepository.read(id);
+    }
+
+    @Override
+    public List<Game> readAll() {
+        return gameRepository.readAll();
+    }
+
+    @Override
+    public void update(Game game) {
+        gameRepository.update(game);
+    }
+
+    @Override
+    public void delete(int id) {
+        gameRepository.delete(id);
     }
 }

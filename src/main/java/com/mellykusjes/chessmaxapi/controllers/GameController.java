@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GameController {
+
     private GameService gameService;
 
     public GameController(GameService gameService) {
