@@ -1,7 +1,10 @@
 package com.mellykusjes.chessmaxapi.models;
 
-public class PieceKing extends Piece {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+public class PieceKing extends Piece {
 
     private boolean notMoved = true;
 
@@ -9,4 +12,15 @@ public class PieceKing extends Piece {
     public void setType() {
         System.out.println("Adding Piece of type 'King' with id: " + getId());
     }
+
+    @Override
+    public List<Position> computeAllowedTargetPositions(Map<Position, Piece> boardState, Position initialPosition) {
+        List<Position> allowedTargetPositions = new ArrayList<>();
+
+        allowedTargetPositions.addAll(computeCrossMove(boardState, initialPosition));
+        allowedTargetPositions.addAll(computeDiagonalMove(boardState, initialPosition));
+
+        return allowedTargetPositions;
+    }
+
 }
